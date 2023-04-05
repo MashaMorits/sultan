@@ -63,7 +63,7 @@ function CartItem(props: ICartItem) {
             <div className="row__price">
                 <Counter count={count} apdate={apdateCount} />
                 <p className="price">{+product.price * count} ₸</p>
-                <a href="" className="del" onClick={() => delItem()} >                                
+                <a href="/cart" className="del" onClick={() => delItem()} >                                
                     <img src={del} />
                 </a>
             </div>
