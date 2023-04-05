@@ -25,10 +25,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
       <Header />
-        <div className="container">
-             
+        <div className="container">             
           <Routes>
-                <Route index element={<CatalogPage />} />
+                <Route path='/catalog' index element={<CatalogPage />} />
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
