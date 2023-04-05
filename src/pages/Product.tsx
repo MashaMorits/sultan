@@ -109,7 +109,7 @@ function Product() {
         <>
             {windowOuterWidth ? <div className="breadcrumbs">
                                     <p>Главная</p>
-                                    <Link to="/"
+                                    <Link to="/sultan"
                                     className={"breadcrumb-active"}
                                     >
                                     Косметика и гигиена

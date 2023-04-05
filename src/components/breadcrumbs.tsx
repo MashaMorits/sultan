@@ -12,7 +12,7 @@ function Breadcrumbs() {
     const windowOuterWidth = window.outerWidth
 
     let breadcrumbs = <><p>Главная</p>
-                        <Link to="/"
+                        <Link to="/sultan"
                         className={"breadcrumb-not-active"}
                         >
                         Косметика и гигиена
@@ -22,7 +22,7 @@ function Breadcrumbs() {
 
         if(location.pathname.includes('cart')){
             breadcrumbs = <><p>Главная</p>
-                            <Link to="/"
+                            <Link to="/sultan"
                             className={"breadcrumb-active"}
                             >
                             Косметика и гигиена
