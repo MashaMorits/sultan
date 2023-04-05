@@ -27,7 +27,7 @@ function App() {
       <Header />
         <div className="container">             
           <Routes>
-                <Route path='/catalog' index element={<CatalogPage />} />
+                <Route path='/sultan' index element={<CatalogPage />} />
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
