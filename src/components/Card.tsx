@@ -4,8 +4,9 @@ import bottle from '../images/bottle.svg'
 import cartW from '../images/cartW.svg'
 import box from '../images/box.svg'
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../hooks';
-import { setCart } from '../store/productsSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { apdateCartState } from '../store/productsSlice';
+import Button from './Button';
 
 
 interface CardProps {
@@ -14,7 +15,7 @@ interface CardProps {
 
 function Card({product}: CardProps) {
 
-    let cart: ICartItem[] = localStorage.cart && JSON.parse( localStorage.cart )
+    let Cart = useAppSelector(state => state.products.cart)
 
     const dispatch = useAppDispatch()    
 
@@ -22,39 +23,31 @@ function Card({product}: CardProps) {
 
     function isInCart() {// проверяем наличие данного товара в корзине
 
-        if (cart !== undefined ) {
-            let currentProd = cart.find(el => el.product === JSON.stringify(product)) 
-            currentProd && setInCart(true)
+        if (Cart.find(el => el.product === product)) {
+            setInCart(true)
         }
-
     }
 
-    // localStorage.clear()
 
     function apdateCart() {
 
-        let currentCart: ICartItem[] = localStorage.cart && JSON.parse( localStorage.cart )
+        let newCart = [...Cart]
 
-        if(inCart){
-            let newCart = currentCart.filter(el => {
-                return el.product !== JSON.stringify(product)
-            })
-           
-            localStorage.cart = JSON.stringify(newCart)
-            
-        } else {
-
-           let item = {product: JSON.stringify(product), count: '1'}
-
-           if (currentCart) {
-                currentCart.push(item)
-                localStorage.cart = JSON.stringify(currentCart)                
-           } else {
-                localStorage.cart = JSON.stringify([item])                
-           }   
+        let item: ICartItem = {
+            product: product,
+            count: 1
         }
-        
-        dispatch(setCart(JSON.parse(localStorage.cart)))
+
+        if (inCart) {            
+            newCart = newCart.filter(el => {
+                return el.product !== item.product
+            })
+        } else {            
+            newCart.push(item)
+        }  
+
+        dispatch(apdateCartState(newCart))
+
         setInCart(!inCart)
     }
 
@@ -95,14 +88,13 @@ function Card({product}: CardProps) {
 
                     <div className="row row__price">
                         <p className='price'>{product.price} ₸</p>
-                        <a className='button button__cart' onClick={() => apdateCart()}>
-                            <p>{inCart ? 'УДАЛИТЬ' : 'В КОРЗИНУ'}</p> 
-                            <img src={cartW} alt="" />                       
-                        </a> 
+                     
+                        <div className="burron__wrap" onClick={() => apdateCart()} >
+                            <Button className='button__cart' icon={cartW} text={inCart ? 'УДАЛИТЬ' : 'В КОРЗИНУ'} />
+                        </div>
+                        
                     </div>
                 </div>
-                
-                
         </div>
      );
 }

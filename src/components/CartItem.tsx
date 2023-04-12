@@ -3,33 +3,28 @@ import Counter from "./Counter";
 import bottle from '../images/bottle.svg'
 import box from '../images/box.svg'
 import del from '../images/del.svg'
-
-interface ICartItem {
-    item: string,
-    count: number,
-    getSum: (arg0: ICartStorage) => void
-}
-
-interface ICartStorage {
-    product: string,
-    count: number
-}
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { apdateCartState } from "../store/productsSlice";
+import { ICartItem, IProduct } from "../models";
 
 
 function CartItem(props: ICartItem) {
+    
 
-    let cart: ICartStorage[] = localStorage.cart && JSON.parse( localStorage.cart )
+    let Cart = useAppSelector(state => state.products.cart)
 
     const [count, setCount] = useState(props.count)
 
-    let product = JSON.parse(props.item)
+    let product = props.product
+
+    const dispatch = useAppDispatch()
+    
 
 
     function delItem(){ // удаление товара из корзины и localStorage
-        cart = cart.filter(el => {
-            return el.product !== props.item
-        })
-        localStorage.cart = JSON.stringify(cart)
+        
+        let newCart = Cart.filter(el=> el.product != product)
+        dispatch(apdateCartState(newCart))
     }
 
 
@@ -44,7 +39,21 @@ function CartItem(props: ICartItem) {
   
 
     useEffect(() => {
-        props.getSum({product : product.barcode, count : count } )
+        let item = {
+            product: product,
+            count: count
+        }
+
+        let newCart = Cart.map(el => {
+            if ( el.product === product ){
+                return item
+            } else {
+                return el
+            }
+        })
+
+        dispatch(apdateCartState(newCart))
+
     }, [count])
 
 
@@ -63,9 +72,11 @@ function CartItem(props: ICartItem) {
             <div className="row__price">
                 <Counter count={count} apdate={apdateCount} />
                 <p className="price">{+product.price * count} ₸</p>
-                <a href="/cart" className="del" onClick={() => delItem()} >                                
+                <div className="del" 
+                onClick={() => delItem()} 
+                >                                
                     <img src={del} />
-                </a>
+                </div>
             </div>
             
         </div>

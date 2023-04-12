@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { IProduct, ICartItem } from "../models";
+import { IProduct } from "../models";
 import show from '../images/show.svg'
-import { setCart } from "../store/productsSlice";
+import { apdateCartState } from "../store/productsSlice";
 import arrow from '../images/arrow.svg'
 
 
@@ -14,8 +14,8 @@ import arrow from '../images/arrow.svg'
 function Product() {
 
     let products: IProduct[] = useAppSelector(state => state.products.products)  
-     
-    let cart: ICartItem[] = localStorage.cart && JSON.parse( localStorage.cart )
+
+    let Cart = useAppSelector(state => state.products.cart)
 
     const dispatch = useAppDispatch()
    
@@ -26,7 +26,6 @@ function Product() {
 
     const [count, setCount] = useState(1)
     const [product, setProduct] = useState<IProduct>()
-    const [inCart, setInCart] = useState(false)
     const [ showDescription, setShowDescription ] = useState(false)
     const [ showFeatures, setShowFeatures ] = useState(false)
 
@@ -45,53 +44,36 @@ function Product() {
         }  
     }
 
-    // localStorage.clear()
+
+    let currentItem = Cart.find(el => el.product.barcode === product?.barcode)
 
     function isInCart() {// проверяем наличие данного товара в корзине
 
-        if (cart !== undefined ) {
-            let currentProd = cart.find(el => el.product === JSON.stringify(product)) 
-            console.log(currentProd)
-            console.log(cart)
-            return currentProd
+        if (currentItem) {
+            let currentItem = Cart.find(el => el.product === product)
+            setCount(currentItem!.count)    
         }
 
     }
 
 
-    function readStorage() { // если товар уже лежит в корзине, устанавливаем количество
-       
-        if (isInCart() !== undefined) {
-            setCount(Number(isInCart()?.count))
-            setInCart(true)
-        }
-        
-    }
 
     function addToCart(event: React.MouseEvent<HTMLElement>){ // функция добавления в корзину
-        event?.preventDefault()
-          
-        
+        event?.preventDefault()         
+       
+        let newCart = [...Cart]
+
         let item = { 
-            product: JSON.stringify(product),
-            count: String(count) 
+            product: product!,
+            count: count
         }    
 
-        if (cart) {
+        if (currentItem) {
+            newCart = newCart.filter(el => el.product.barcode != product?.barcode)
+        } 
+        newCart.push(item)
+        dispatch(apdateCartState(newCart))
 
-            if (inCart) {
-                isInCart()!.count = String(count)
-            } else {
-                cart.push(item)
-            }
-
-            localStorage.cart = JSON.stringify(cart)
-            
-        } else {
-            localStorage.cart = JSON.stringify([item])
-        }  
-
-        dispatch(setCart(JSON.parse(localStorage.cart)))
         
     }
 
@@ -100,7 +82,7 @@ function Product() {
     }, []);
     
     useEffect(() => {
-        readStorage()
+        isInCart()
     }, [product]);
     
 

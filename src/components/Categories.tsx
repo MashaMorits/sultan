@@ -1,57 +1,46 @@
 import { IFilter  } from '../models'
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { filter } from '../store/productsSlice'
 import { categories } from '../data/products';
-import store from '../store';
 import { useEffect, useState } from 'react';
 
 
-let catList: string[] = []
 
-interface ICatProp {
-    activeCat: string[]
-} 
-
-function Categories(props: ICatProp) {
+function Categories() {
 
 
     const [activeCatList, setActiveCatList] = useState<string[]>([])
-    let currentStore = store.getState()
+    let currentStore = useAppSelector(state => state.products)
 
     const dispatch = useAppDispatch();
 
-    function getActiveCategories(){
-        if (props.activeCat.length < categories.length) {
-            setActiveCatList(props.activeCat)
-        }
+    function getActiveCategories(){        
+        setActiveCatList(currentStore.categories)
     }    
     
-    function filterCat(cat:string, event: React.MouseEvent<HTMLElement>) {
-        
 
-        if(event.currentTarget.classList.contains('active')){
-            catList.splice(catList.indexOf(cat), 1)           
+    function filterByCat(cat:string, event: React.MouseEvent<HTMLElement>) {
+        let newList = [...activeCatList]
+
+        if(newList.includes(cat)) {
+            newList = newList.filter(item => item !== cat)
         } else {
-            catList.push(cat)
+            newList.push(cat)
         }
 
-        event.currentTarget.classList.toggle('active')
-
         let filterObj: IFilter = {
-            minPrice: currentStore.products.minPrice, 
-            maxPrice: currentStore.products.maxPrice, 
-            brands: currentStore.products.brands,
-            categories: catList
-           }
+                    minPrice: currentStore.minPrice, 
+                    maxPrice: currentStore.maxPrice, 
+                    brands: currentStore.brands,
+                    categories: newList
+                   }
 
-        setActiveCatList(catList)
-   
-       dispatch(filter(filterObj))
+        dispatch(filter(filterObj))
     }
 
     useEffect(() => {
         getActiveCategories()
-    }, [props])
+    }, [currentStore])
 
     return ( 
         <div className="categories">
@@ -62,7 +51,8 @@ function Categories(props: ICatProp) {
                     data-key={index}
                     key={index}
                     className={activeCatList.includes(item) ? 'active' : ''}
-                    onClick={(event: React.MouseEvent<HTMLElement>) => filterCat( item, event ) }
+                    // onClick={(event: React.MouseEvent<HTMLElement>) => filterCat( item, event ) }
+                    onClick={(event: React.MouseEvent<HTMLElement>) => filterByCat( item, event ) }
                 >
                     {item}
                 </p>

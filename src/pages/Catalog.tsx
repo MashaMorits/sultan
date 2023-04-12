@@ -10,7 +10,6 @@ import Breadcrumbs from "../components/breadcrumbs";
 function CatalogPage() {
     
     let products: IProduct[] = useAppSelector(state => state.products.products)
-    let activeCat = [...useAppSelector(state => state.products.categories)]
     
     
     
@@ -26,7 +25,7 @@ function CatalogPage() {
                 
 
                 
-                <Categories activeCat={ activeCat }/>
+                <Categories />
                 <Catalog products={products} />
             </div>
         </>

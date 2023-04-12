@@ -21,13 +21,18 @@ export interface IFilter {
 }
 
 export interface ICartItem {
-    product: string,
-    count: string
+    product: IProduct,
+    count: number,
 }
 
-export interface ICart {
-    product: string,
-    count: string
+export interface ProductState {
+    products: IProduct[],
+    minPrice: number,
+    maxPrice: number, 
+    brands: string[],
+    categories: string[],
+    totalCount:  number,
+    totalPrice: number,
+    cart: ICartItem[]
 }
-
 

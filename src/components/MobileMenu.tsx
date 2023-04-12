@@ -1,7 +1,10 @@
 import geo from '../images/geo.svg'
 import callS from '../images/call.svg'
 import mail from '../images/mail.svg'
+import download from '../images/download.svg'
 import call from '../images/call.png'
+import Button from './Button'
+import Navigation from './NavigationMenu'
 
 function MobileMenu() {
     return ( 
@@ -37,28 +40,10 @@ function MobileMenu() {
                     <div className="mobile__menu">
                         <p className='mobile__menu-title'>Меню сайта:</p>
                         <nav className='header__nav'>
-                            <ul>
-                                <li>
-                                    <a href="">О компании</a>
-                                </li>
-                                <li>
-                                    <a href="">Доставка и оплата</a>
-                                </li>
-                                <li>
-                                    <a href="">Возврат</a>
-                                </li>
-                                <li>
-                                    <a href="">Контакты</a>
-                                </li>
-                            </ul>
+                            <Navigation />
                         </nav>
                     </div>
-                    <a href="" className='button'>
-                        <p>Прайс-лист</p>
-                        <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.958 6.375H11.1247V2.125H6.87467V6.375H4.04134L8.99967 12.0417L13.958 6.375ZM3.33301 13.4583H14.6663V14.875H3.33301V13.4583Z" fill="white"/>
-                        </svg>
-                    </a>
+                    <Button className='' icon={download}  text='Прайс-лист' />
                 </div>                
             </div>
      );

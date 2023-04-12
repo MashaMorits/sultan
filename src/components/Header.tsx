@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 import manager from '../images/manager.png'
 import geo from '../images/geo.svg'
 import mail from '../images/mail.svg'
+import download from '../images/download.svg'
 import catalog from '../images/catalog.png'
+import catalogW from '../images/catalogW.svg'
 import loop from '../images/loop.png'
 import { useAppSelector } from '../hooks';
-import { ICartItem } from '../models';
-import { useAppDispatch } from '../hooks';
-import { setCart } from '../store/productsSlice';
 import MobileMenu from './MobileMenu';
+import Button from './Button';
+import Navigation from './NavigationMenu';
 
 
 
@@ -20,14 +21,11 @@ function Header() {
 
     const [ isOpen, setIsOpen] = useState(false)
     let state = useAppSelector(state => state.products)
-    let cart: ICartItem[] = localStorage.cart && JSON.parse( localStorage.cart )
-    const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(setCart(cart))
-    }, [])
-
-   
+    function openMobile() {
+        setIsOpen(prev=> !prev)
+        document.querySelector('body')!.classList.toggle('opened')
+    }
 
     return ( 
         <header className="header">
@@ -52,27 +50,10 @@ function Header() {
                             </div>
                         </div>
                         <nav className='header__nav'>
-                            <ul>
-                                <li>
-                                    <a href="">О компании</a>
-                                </li>
-                                <li>
-                                    <a href="">Доставка и оплата</a>
-                                </li>
-                                <li>
-                                    <a href="">Возврат</a>
-                                </li>
-                                <li>
-                                    <a href="">Контакты</a>
-                                </li>
-                            </ul>
+                            <Navigation />
                         </nav>
-                        <a href="" className='button'>
-                            <p>Прайс-лист</p>
-                            <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.958 6.375H11.1247V2.125H6.87467V6.375H4.04134L8.99967 12.0417L13.958 6.375ZM3.33301 13.4583H14.6663V14.875H3.33301V13.4583Z" fill="white"/>
-                            </svg>
-                        </a>
+                       
+                        <Button className='' icon={download}  text='Прайс-лист' />
                     </div>
                 </div>
             </div>
@@ -80,19 +61,13 @@ function Header() {
                 <div className="container">
                     
                     <div className="header__bottom-wrap">
-                        <div className={isOpen ? 'open__mobile active' : "open__mobile"} onClick={() => setIsOpen(prev=> !prev) }>
+                        <div className={isOpen ? 'open__mobile active' : "open__mobile"} onClick={() => openMobile() }>
                                 <span></span>
                         </div>
                         <img src={logo} className="logo" alt="logo" />
-                        <a href="" className='button'>
-                            <p>Каталог</p>
-                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0.5 2C0.5 1.17157 1.17157 0.5 2 0.5H6C6.27614 0.5 6.5 0.723858 6.5 1V6C6.5 6.27614 6.27614 6.5 6 6.5H1C0.723858 6.5 0.5 6.27614 0.5 6V2Z" stroke="white"/>
-                                <path d="M8.5 1C8.5 0.723858 8.72386 0.5 9 0.5H13C13.8284 0.5 14.5 1.17157 14.5 2V6C14.5 6.27614 14.2761 6.5 14 6.5H9C8.72386 6.5 8.5 6.27614 8.5 6V1Z" stroke="white"/>
-                                <path d="M8.5 9C8.5 8.72386 8.72386 8.5 9 8.5H14C14.2761 8.5 14.5 8.72386 14.5 9V13C14.5 13.8284 13.8284 14.5 13 14.5H9C8.72386 14.5 8.5 14.2761 8.5 14V9Z" stroke="white"/>
-                                <path d="M0.5 9C0.5 8.72386 0.723858 8.5 1 8.5H6C6.27614 8.5 6.5 8.72386 6.5 9V14C6.5 14.2761 6.27614 14.5 6 14.5H2C1.17157 14.5 0.5 13.8284 0.5 13V9Z" stroke="white"/>
-                            </svg>
-                        </a>
+                        
+                        <Button className='' icon={catalogW}  text='Каталог' />
+
                         <div className="search">
                             <input type="text" placeholder='Поиск' />
                             <a href="">
@@ -113,11 +88,8 @@ function Header() {
                             <img src={manager} alt="" />
                         </div>
                         
-                        <Link to='/admin' className='button'>
-                            <p>Админка</p>
-                            <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.958 6.375H11.1247V2.125H6.87467V6.375H4.04134L8.99967 12.0417L13.958 6.375ZM3.33301 13.4583H14.6663V14.875H3.33301V13.4583Z" fill="white"/>
-                            </svg>
+                        <Link to='/admin'>                            
+                            <Button className='' icon={catalogW}  text='Админка' />
                         </Link>
 
                         <Link to='/cart'>

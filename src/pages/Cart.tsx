@@ -1,71 +1,50 @@
 import { useEffect, useState } from "react";
 import Breadcrumbs from "../components/breadcrumbs";
 import CartItem from "../components/CartItem";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import check from '../images/check.png'
+import { ICartItem } from "../models";
+import { apdateCartState } from "../store/productsSlice";
 
-interface ICartStorage {
-    product: string,
-    count: number
-}
+
 
 
 function Cart() {
 
 
-    const [ cartProducts, setCartProducts ] = useState<ICartStorage[]>([])
-    const [ sum, setSum ] = useState(0)
+    const [ cartProducts, setCartProducts ] = useState<ICartItem[]>([])
     const [ isCheckout, setIsCheckout ] = useState(false)
 
-    let cart: ICartStorage[] = localStorage.cart && JSON.parse( localStorage.cart )
+    let Cart = useAppSelector(state => state.products.cart)
 
+    const count = useAppSelector(state=> state.products.totalCount)
+    const price = useAppSelector(state=> state.products.totalPrice)
+
+
+    const dispatch = useAppDispatch()
     
 
 
 
     function getProducts() { // получаем информацию о товарах
-        
-        cart && setCartProducts([...cart])  
+       
+        setCartProducts([...Cart]) 
 
     }
 
-   
-    function getSum(obj: ICartStorage){         
-
-       let resultSum = 0
-       let resultCount = 0
-       let newState = [...cartProducts]
-
-       newState.map(item => {
-            
-            let current = JSON.parse(item.product).barcode
-
-            if (current === obj.product) {
-                item.count = obj.count
-            }
-            resultSum += item.count * JSON.parse(item.product).price
-            resultCount += item.count
-       })
-
-       setSum(resultSum)
-
-    //    localStorage.sum = resultSum
-    //    localStorage.resultCount = resultCount
-    }
 
     function checkout() {
-        setIsCheckout(true)
-        setCartProducts([])
-        setSum(0)
-        localStorage.removeItem('cart')
+        setIsCheckout(true)       
+
+        dispatch(apdateCartState([]))
     }
 
     useEffect(() => {
         getProducts()
-    }, [])
+        console.log('apdate')
+    }, [count])
 
  
-
-    // console.log('cartProducts', cartProducts)
 
     return ( 
 
@@ -77,13 +56,14 @@ function Cart() {
                 {
                     cartProducts.map(item => {
                         let count = +item.count
-                        return <CartItem item={item.product} count={count} getSum={getSum} />
+                        return <CartItem product={item.product} count={count}
+                        />
                     })
                 }
                 </div>
                 <div className="row">
                     <div className="button" onClick={() => checkout()} ><p>Оформить заказ</p></div>
-                    <p className="price">{sum} ₸</p>
+                    <p className="price">{price} ₸</p>
                 </div>  
 
                 {isCheckout && <div className="checkout">

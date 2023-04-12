@@ -17,6 +17,12 @@ $gray: #3F4E65;
   font-family: "Inter";
 }
 
+body{
+  &.opened{
+    overflow: hidden;
+  }
+}
+
 .container {
   width: 100%;
   max-width: 1370px;
