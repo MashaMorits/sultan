@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+
 
 import "@fontsource/inter/300.css";
 import "@fontsource/inter/400.css";
@@ -6,7 +6,7 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import './App.scss';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import CatalogPage from './pages/Catalog';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
@@ -17,14 +17,12 @@ import Footer from './components/Footer';
 
 
 function App() {
-  // localStorage.clear()
-
-  
+  // localStorage.clear()  
 
   return (
-    <BrowserRouter>
+    
       <div className="App">
-      <Header />
+        <Header />
         <div className="container">             
           <Routes>
                 <Route path='/sultan' index element={<CatalogPage />} />
@@ -32,12 +30,9 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
           </Routes>
-        </div>
-        
-         
+        </div>   
         <Footer />       
       </div>
-    </BrowserRouter>
   )
 }
 

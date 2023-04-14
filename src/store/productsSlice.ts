@@ -34,6 +34,7 @@ export const productsSlice = createSlice({
       },
 
       filter: (state, action: PayloadAction<IFilter>) => {
+        console.log(action.payload)
         let filtered = {...state}        
 
         filtered.brands = [...action.payload.brands]

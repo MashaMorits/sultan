@@ -170,12 +170,12 @@ function Filters() {
                 </div>
 
                 <div className="row">
-                    <a className="button"
+                    <div className="button" data-testid='showBtn' 
                             onClick={(event: React.MouseEvent<HTMLElement>) => filterPrice( minPrice, maxPrice, filterBrands) }
                         >
                             <p>Показать</p>
-                    </a>
-                    <div className="del"
+                    </div>
+                    <div className="del" data-testid='del'
                         onClick={() => removeFilters()}
                     >                                
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
