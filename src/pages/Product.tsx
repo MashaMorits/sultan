@@ -8,7 +8,7 @@ import { IProduct } from "../models";
 import show from '../images/show.svg'
 import { apdateCartState } from "../store/productsSlice";
 import arrow from '../images/arrow.svg'
-import Counter from "../components/Counter";
+import Counter from "../UI/Counter";
 
 
 

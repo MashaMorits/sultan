@@ -1,8 +1,9 @@
 
 interface IButtton {
-    className: string,
-    icon: string,
-    text: string
+    className?: string,
+    icon?: string,
+    text?: string,
+    onClick?: () => void
 }
 
 function Button(props: IButtton) {

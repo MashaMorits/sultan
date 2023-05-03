@@ -3,7 +3,7 @@ import mc from '../images/mc.png'
 import Visa from '../images/Visa.png'
 import wa from '../images/wa.svg'
 import tg from '../images/tg.svg'
-import Button from './Button'
+import Button from '../UI/Button'
 import download from '../images/download.svg'
 import Navigation from './NavigationMenu'
 

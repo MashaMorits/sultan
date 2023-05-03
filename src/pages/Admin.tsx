@@ -1,4 +1,6 @@
+
 import { useEffect, useState } from "react";
+import Breadcrumbs from "../components/breadcrumbs";
 import EditBlock from "../components/EditBlock";
 import { useAppSelector } from "../hooks";
 import { IProduct } from "../models";
@@ -66,24 +68,27 @@ function Admin() {
 
 
     console.log('products', products)
-    return (         
-        <div className="edit">
-            <h1>Admin</h1>
+    return (   
+        <>    
+            <Breadcrumbs />
+            <div className="edit">
+                <h1>Admin</h1>
 
-            {                
-                products.map(item=> {
-                    return (
-                            <EditBlock item={item} remove={removeItem} apdate={apdateProducts} key={item.barcode}/> 
-                       )
-                })
-            }
+                {                
+                    products.map(item=> {
+                        return (
+                                <EditBlock item={item} remove={removeItem} apdate={apdateProducts} key={item.barcode}/> 
+                        )
+                    })
+                }
 
-            <div className="row">
-                <div className="button" onClick={() => setProducts([...products, newProduct])}><p>Создать новый товар</p></div>
-                <div className="button" onClick={() => saveProducts()} ><p>Сохранить</p></div>
+                <div className="row">
+                    <div className="button" onClick={() => setProducts([...products, newProduct])}><p>Создать новый товар</p></div>
+                    <div className="button" onClick={() => saveProducts()} ><p>Сохранить</p></div>
+                </div>
+                
             </div>
-            
-        </div>
+        </>  
      );
 }
 

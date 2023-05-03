@@ -3,7 +3,7 @@ import callS from '../images/call.svg'
 import mail from '../images/mail.svg'
 import download from '../images/download.svg'
 import call from '../images/call.png'
-import Button from './Button'
+import Button from '../UI/Button'
 import Navigation from './NavigationMenu'
 
 function MobileMenu() {

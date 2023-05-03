@@ -41,6 +41,7 @@ function Categories() {
     useEffect(() => {
         getActiveCategories()
     }, [currentStore])
+    
 
     return ( 
         <div className="categories">
@@ -51,7 +52,6 @@ function Categories() {
                     data-key={index}
                     key={index}
                     className={activeCatList.includes(item) ? 'active' : ''}
-                    // onClick={(event: React.MouseEvent<HTMLElement>) => filterCat( item, event ) }
                     onClick={(event: React.MouseEvent<HTMLElement>) => filterByCat( item, event ) }
                 >
                     {item}

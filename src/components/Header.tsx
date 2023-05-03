@@ -10,7 +10,7 @@ import catalogW from '../images/catalogW.svg'
 import loop from '../images/loop.png'
 import { useAppSelector } from '../hooks';
 import MobileMenu from './MobileMenu';
-import Button from './Button';
+import Button from '../UI/Button';
 import Navigation from './NavigationMenu';
 
 
@@ -53,7 +53,7 @@ function Header() {
                             <Navigation />
                         </nav>
                        
-                        <Button className='' icon={download}  text='Прайс-лист' />
+                        <Button icon={download}  text='Прайс-лист' />
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@ function Header() {
                         </div>
                         <img src={logo} className="logo" alt="logo" />
                         
-                        <Button className='' icon={catalogW}  text='Каталог' />
+                        <Button icon={catalogW}  text='Каталог' />
 
                         <div className="search">
                             <input type="text" placeholder='Поиск' />
@@ -115,6 +115,7 @@ function Header() {
                     <img src={catalog} alt="" />
                     <p>Каталог</p>
                 </div>
+                {/* <Button className='button__white' icon={catalog} text='Каталог' /> */}
                 <div className="button__white">
                     <img src={loop} alt="" />
                     <p>Поиск</p>

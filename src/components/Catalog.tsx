@@ -1,14 +1,16 @@
-import { IProduct } from '../models'
+
+
 import Card from "../components/Card";
 import Filters from './Filters';
 import { useState } from 'react';
+import { useAppSelector } from '../hooks';
+import Pagination from "../UI/Pagination";
 
-interface CatalogProps {
-    products: IProduct[]
-}
 
-function Catalog({products}: CatalogProps) {
 
+function Catalog() {
+
+    let products = useAppSelector(state => state.products.products)
     let cardCount = products.length
     let perPage = 15
     let pageCount = Math.ceil(cardCount/perPage)
@@ -20,13 +22,17 @@ function Catalog({products}: CatalogProps) {
     
     const [currentPage, setCurrentPage] = useState(1)
 
-    function apdatePage(x: number) {
-        
-        if (currentPage === 1 && x < 0 || currentPage === pageCount && x > 0) {
-            
+    function apdatePage(x: number, type: string) {
+        if (type === 'arrow') {
+             if (currentPage === 1 && x < 0 || currentPage === pageCount && x > 0) {
+                
+            } else {
+                setCurrentPage(currentPage + x)
+            }
         } else {
-            setCurrentPage(currentPage + x)
+            setCurrentPage(x)
         }
+       
     }
 
    
@@ -44,23 +50,7 @@ function Catalog({products}: CatalogProps) {
                             }})
                     }
                 </div> 
-                { pageCount>1 && <div className="pagination">
-                    <div className='prev' onClick={() => apdatePage(-1)}>
-                        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 2.28571L3.375 8L9 13.7143L7.875 16L2.54292e-07 8L7.875 9.83506e-08L9 2.28571Z" fill="#FFC85E"/>
-                        </svg>
-                    </div>
-
-                    {pages.map(page => {
-                        return <div className={page===currentPage ? 'pagination__item current' : 'pagination__item'} onClick={() => setCurrentPage(page)}><span>{page}</span></div>
-                    })}
-
-                    <div className='next' onClick={() => apdatePage(1)}>                        
-                        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 13.7143L5.625 8L0 2.28571L1.125 0L9 8L1.125 16L0 13.7143Z" fill="#FFC85E"/>
-                        </svg>
-                    </div>
-                </div>}
+                { pageCount>1 && <Pagination apdatePage={apdatePage} currentPage={currentPage} pages={pages} />}
             </div>
             
         </div>

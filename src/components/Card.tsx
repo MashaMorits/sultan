@@ -6,7 +6,7 @@ import box from '../images/box.svg'
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { apdateCartState } from '../store/productsSlice';
-import Button from './Button';
+import Button from '../UI/Button';
 
 
 interface CardProps {

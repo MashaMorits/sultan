@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Counter from "./Counter";
+import Counter from "../UI/Counter";
 import bottle from '../images/bottle.svg'
 import box from '../images/box.svg'
 import del from '../images/del.svg'
